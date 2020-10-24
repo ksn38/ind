@@ -7,39 +7,39 @@ let z = 0;
 
 
 let dict = function (dif) {
-  /*let day = new Map();*/
-  day.clear();
   let dateLast = new Date();
   dateLast.setDate(dateLast.getDate() - dif);
   dateLast = dateLast.toISOString().slice(0, 10);
-  /*console.log(dateLast);*/
-  /*for (let i = 0; i < 201; i += 100) {*/
-  let url = 'http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.json?date=' + dateLast + '&start=' + 0;
-  let json = $.getJSON(url);
-    
-  let rows = json.done(function(response) {
-    console.log(response);
-    return response;
-  });
-  console.dir(json.responseJSON.responseText);
-    /*for (let row = 0; row < rows.length; row++) {
-      day.set(rows[row][2], rows[row][9]);
-  });
-  /*};*/
+  for (let i = 0; i < 201; i += 100) {
+    let url = 'http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.json?date=' + dateLast + '&start=' + i;
+    $.ajax({
+    url: url,
+    async: false,
+    dataType: 'json',
+    success: function (data) {
+      let rows = data.history.data;
+      for (let row = 0; row < rows.length; row++) {
+        day.set(rows[row][2], rows[row][9]);
+      };
+    }});
+  };
   return day;
 };
-
+  
 
 button.onclick = function () {
   y += 1;
   x.textContent = y;
-  console.log(dict(1));
-  /*let val = dict(1).entries();
-  console.log(val.next().value);
-  for (let [key, value] of dict(1)) {
-    console.log(key + ' ' + value)};*/
-    
-    
+  let dict1 = new Map([...dict(1).entries()]);
+  let dict2 = new Map([...dict(2).entries()]);
+  let listKeys = [...dict1.keys()];
+  let outMap = new Map();
+  console.log(listKeys[0]);
+  for (let key = 0; key < listKeys.length; key++) {
+    outMap.set(listKeys[key], (((dict1.get(listKeys[key])/dict2.get(listKeys[key])) - 1) * 100));
+  };
+  outMap = new Map([...outMap.entries()].sort((a,b) => b[1] - a[1]));
+  console.log(outMap);
 };
 
 /*let dict = function (dif) {
