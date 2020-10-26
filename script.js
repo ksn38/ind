@@ -4,7 +4,7 @@ let changesHigh = document.querySelectorAll('.change-high');
 let changesLow = document.querySelectorAll('.change-low');
 let button = document.querySelector('.button');
 let text = document.querySelector('p');
-let y = 1;
+let days = document.getElementById('days');
 
 
 let dict = function (dif) {
@@ -30,10 +30,16 @@ let dict = function (dif) {
   
 
 button.onclick = function () {
-  y += 1;
-  console.log(y);
-  let dict1 = new Map([...dict(1).entries()]);
-  let dict2 = new Map([...dict(36).entries()]);
+  let date = new Date();
+  if (date.getDay() == 0) {
+    date = 2;
+  } else if (date.getDay() == 1) {
+    date = 3;
+  } else {date = 1;};
+  console.log(date);
+  let dict1 = dict(date);
+  dict1 = new Map([...dict1.entries()]);
+  let dict2 = new Map([...dict(days.value).entries()]);
   let listKeys = [...dict1.keys()];
   let outMap = new Map();
   for (let key = 0; key < listKeys.length; key++) {
