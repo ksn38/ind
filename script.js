@@ -11,7 +11,13 @@ let dict = function (dif) {
   let day = new Map();
   let dateLast = new Date();
   dateLast.setDate(dateLast.getDate() - dif);
+    if (dateLast.getDay() == 6) {
+    dateLast.setDate(dateLast.getDate() - 1);
+  } else if (dateLast.getDay() == 0) {
+    dateLast.setDate(dateLast.getDate() - 2);
+  };
   dateLast = dateLast.toISOString().slice(0, 10);
+  console.log(`dateLast slice ${dateLast}`);
   for (let i = 0; i < 201; i += 100) {
     let url = 'http://iss.moex.com/iss/history/engines/stock/markets/shares/boards/tqbr/securities.json?date=' + dateLast + '&start=' + i;
     $.ajax({
@@ -30,14 +36,14 @@ let dict = function (dif) {
   
 
 button.onclick = function () {
-  let date = new Date();
+  /*let date = new Date();
   if (date.getDay() == 0) {
     date = 2;
   } else if (date.getDay() == 1) {
     date = 3;
   } else {date = 1;};
-  console.log(date);
-  let dict1 = dict(date);
+  date.setDate(date.getDate() - 1)*/
+  let dict1 = dict(1);
   dict1 = new Map([...dict1.entries()]);
   let dict2 = new Map([...dict(days.value).entries()]);
   let listKeys = [...dict1.keys()];
