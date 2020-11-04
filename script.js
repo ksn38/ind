@@ -8,14 +8,16 @@ let days = document.getElementById('days');
 
 
 let dict = function (dif) {
+  let innDif = dif;
+  console.log(innDif);
   let day = new Map();
   let dateLast = new Date();
   dateLast.setDate(dateLast.getDate() - dif);
-    if (dateLast.getDay() == 6) {
+  /*if (dateLast.getDay() == 6) {
     dateLast.setDate(dateLast.getDate() - 1);
   } else if (dateLast.getDay() == 0) {
     dateLast.setDate(dateLast.getDate() - 2);
-  };
+  };*/
   dateLast = dateLast.toISOString().slice(0, 10);
   console.log(`dateLast slice ${dateLast}`);
   for (let i = 0; i < 201; i += 100) {
@@ -26,9 +28,14 @@ let dict = function (dif) {
     dataType: 'json',
     success: function (data) {
       let rows = data.history.data;
+      console.log(!Number.isNaN(rows[0][9]));
+      if (!Number.isNaN(rows[0][9])) {
       for (let row = 0; row < rows.length; row++) {
         day.set(rows[row][2], rows[row][9]);
-      };
+      }} else {
+        innDif = innDif - 1;
+        console.log(innDif);
+        dict(innDif)};
     }});
   };
   return day;
@@ -36,13 +43,10 @@ let dict = function (dif) {
   
 
 button.onclick = function () {
-  /*let date = new Date();
-  if (date.getDay() == 0) {
-    date = 2;
-  } else if (date.getDay() == 1) {
-    date = 3;
-  } else {date = 1;};
-  date.setDate(date.getDate() - 1)*/
+  let date = new Date();
+  if (date.getDay() == 1 && parseInt(days.value) < 4) {
+    days.value = 4;
+  }
   let dict1 = dict(1);
   dict1 = new Map([...dict1.entries()]);
   let dict2 = new Map([...dict(days.value).entries()]);
@@ -51,7 +55,7 @@ button.onclick = function () {
   for (let key = 0; key < listKeys.length; key++) {
     let val = ((dict1.get(listKeys[key])/dict2.get(listKeys[key])) - 1) * 10000;
     if (!Number.isNaN(val)) {
-      val = Math.round(val, 2);
+      val = Math.round(val);
       val = val/100;
       outMap.set(listKeys[key], val);
     };
