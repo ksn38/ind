@@ -28,14 +28,14 @@ let dict = function (dif) {
     dataType: 'json',
     success: function (data) {
       let rows = data.history.data;
-      console.log(!Number.isNaN(rows[0][9]));
-      if (!Number.isNaN(rows[0][9])) {
+      console.log(rows != "");
+      if (rows != "") {
       for (let row = 0; row < rows.length; row++) {
         day.set(rows[row][2], rows[row][9]);
       }} else {
-        innDif = innDif - 1;
-        console.log(innDif);
-        dict(innDif)};
+        dif = parseInt(dif) + 1;
+        dict(dif)};
+        console.log(dict(dif));
     }});
   };
   return day;
@@ -48,6 +48,7 @@ button.onclick = function () {
     days.value = 4;
   }
   let dict1 = dict(1);
+  console.log(dict1);
   dict1 = new Map([...dict1.entries()]);
   let dict2 = new Map([...dict(days.value).entries()]);
   let listKeys = [...dict1.keys()];
