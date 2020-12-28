@@ -32,10 +32,10 @@ let cor = (list1, list2) => {
 };
 
 console.log(cor(vix, sp500));
-/*for (let i = 0; i , vix.length; i++) {
+for (let i = 0; i , vix.length; i++) {
   
   cor[i] = (sum(cov(vix, avgVix, sp500, avgSp500)))/Math.sqrt(dif2(vix, avgVix)*dif2(sp500, avgSp500));
-}*/
+
 
 
 new Chart(chart, {
