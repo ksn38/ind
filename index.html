@@ -12,6 +12,18 @@
   <div class='d-flex'>
     <canvas id="line-chart" width="800" height="450"></canvas>
   </div>
+  <form method="post" oninput="dayscountval.value=dayscount.value">
+    <div class="period">
+      <label for="dayscount">Количество дней</label>
+      2 <input type="range" id="dayscount" name="dayscount" min="2" max="8" step="1"> 8
+    </div>
+    <div class="">
+      <output name="dayscountval">5</output>
+    </div>
+  </form>
+  <div class='d-flex'>
+    <canvas id="line-chart2" width="800" height="450"></canvas>
+  </div>
   <script src='script.js'></script>
 </body>
 </html>
