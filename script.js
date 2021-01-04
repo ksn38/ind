@@ -44,36 +44,63 @@ dayscount.onchange = () => {
   rollcorr = [];
   const period = dayscount.value;
   console.log(period);
+  while (rollcorr.length < parseInt(period) - 1) {
+    rollcorr.push(0);
+  };
   for (let i = 0; i <= vix.length - period; i++) {
     rollcorr.push(cor(vix.slice(i, i + parseInt(period)), sp500.slice(i, i + parseInt(period))));
   };
   //console.log(rollcorr);
-  new Chart(chart2, {
-    type: 'line',
+  new Chart(chart, {
+  type: 'line',
     data: {
       labels: [0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
       datasets: [{ 
-          data: rollcorr,
-          label: "R",
-          borderColor: "#3e95cd",
-      }]
+        data: vix,
+        borderColor: "#039000",
+        fill: false,
+        /*label: 'vix',*/
+        yAxisID: 'vix',
+      }, { 
+        data: sp500,
+        borderColor: "#8e5ea2",
+        fill: false,
+        /*label: 'sp500',*/
+        yAxisID: 'sp500',
+      }, { 
+        data: rollcorr,
+        borderColor: "#1e5ea2",
+        fill: false,
+        /*label: 'sp500',*/
+        yAxisID: 'rollcorr',
+      }
+      ]
     },
     options: {
-      scales: {
-        yAxes : [{
-          ticks : {
-            max : 1,    
-            min : -1
-          }
-        }]
-      },
       animation: {
-          duration: 0
+        duration: 0
       },
-      events: [],
+      /*events: [],*/
       title: {
         display: true,
         text: ''
+      },
+      scales: {
+        yAxes: [{
+          id: 'vix',
+          type: 'linear',
+          position: 'left',
+        }, {
+          id: 'sp500',
+          type: 'linear',
+          position: 'right',
+          
+        }, {
+          id: 'rollcorr',
+          type: 'linear',
+          position: 'right',
+          
+        }]
       }
     }
   });
@@ -125,6 +152,12 @@ new Chart(chart, {
       fill: false,
       /*label: 'sp500',*/
       yAxisID: 'sp500',
+    }, { 
+      data: rollcorr,
+      borderColor: "#1e5ea2",
+      fill: false,
+      /*label: 'sp500',*/
+      yAxisID: 'rollcorr',
     }
     ]
   },
@@ -144,6 +177,11 @@ new Chart(chart, {
         position: 'left',
       }, {
         id: 'sp500',
+        type: 'linear',
+        position: 'right',
+        
+      }, {
+        id: 'rollcorr',
         type: 'linear',
         position: 'right',
         
