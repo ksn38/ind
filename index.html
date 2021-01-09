@@ -7,23 +7,35 @@
     <link rel="stylesheet" href="bootstrap.css">
     <script src="jquery-3.5.1.js"></script>
     <script src="Chart.min.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
-  <div class='d-flex'>
-    <canvas id="line-chart" width="800" height="450"></canvas>
-  </div>
-  <form method="post" oninput="dayscountval.value=dayscount.value">
-    <div class="period">
-      <label for="dayscount">Количество дней</label>
-      2 <input type="range" id="dayscount" name="dayscount" min="2" max="8" step="1"> 8
-    </div>
-    <div class="">
-      <output name="dayscountval">5</output>
-    </div>
-  </form>
-  <div class='d-flex'>
-    <canvas id="line-chart2" width="800" height="450"></canvas>
-  </div>
-  <script src='script.js'></script>
+  <div id="app"></div>
+  <!--script type="text/babel" src='script.js'></script-->
+  <script type="text/babel">
+    const user = {
+        id : 5,
+        age: 33,
+        firstName: 'Tom',
+        lastName: 'Smit',
+        getFullName: function(){ 
+            return `${this.firstName} ${this.lastName}`;
+        }
+    };
+    const userClassName = "user-info";
+    const styleObj = {
+        color:'red', 
+        fontFamily:'Verdana'
+    };
+    ReactDOM.render(
+        <div style={styleObj}>
+                <p>Полное имя: {user.getFullName()}</p>
+                <p>Возраст: {user.age}</p>
+        </div>,
+        document.getElementById("app")
+    )
+  </script>
 </body>
 </html>
